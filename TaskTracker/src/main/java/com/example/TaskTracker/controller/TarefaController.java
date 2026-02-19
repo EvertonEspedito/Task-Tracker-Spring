@@ -34,4 +34,12 @@ public class TarefaController {
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
     }
+
+    @PutMapping("/{id}")
+    public TarefaResponseDTO atualizar(
+            @PathVariable Long id,
+            @RequestBody @Valid TarefaRequestDTO dto) {
+
+        return service.atualizar(id, dto);
+    }
 }

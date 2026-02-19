@@ -5,6 +5,7 @@ import com.example.TaskTracker.dto.TarefaResponseDTO;
 import com.example.TaskTracker.model.Tarefa;
 import com.example.TaskTracker.repository.TarefaRepository;
 import org.springframework.stereotype.Service;
+import com.example.TaskTracker.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -45,5 +46,25 @@ public class TarefaService {
 
     public void deletar(Long id) {
         repository.deleteById(id);
+    }
+
+    public TarefaResponseDTO atualizar(Long id, TarefaRequestDTO dto) {
+
+        Tarefa tarefa = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Tarefa com ID " + id + " não encontrada"));
+
+        tarefa.setTitulo(dto.getTitulo());
+        tarefa.setDescricao(dto.getDescricao());
+        tarefa.setConcluida(dto.isConcluida());
+
+        Tarefa atualizada = repository.save(tarefa);
+
+        return new TarefaResponseDTO(
+                atualizada.getId(),
+                atualizada.getTitulo(),
+                atualizada.getDescricao(),
+                atualizada.isConcluida()
+        );
     }
 }
