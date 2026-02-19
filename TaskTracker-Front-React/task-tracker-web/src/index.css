@@ -13,7 +13,6 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: var(--backgroundColor);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -45,6 +44,7 @@ body {
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 4rem;
+  
 }
 
 input {
@@ -54,11 +54,20 @@ input {
   font-size: 1em;
   font-family: inherit;
   margin: 2rem 0.2rem;
+  transition: border-color 0.2s ease;
 }
-input:focus,
-input:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+input:focus {
+  outline: none;
 }
+
+input.inputError,
+input.inputError:focus {
+  border: 2px solid var(--errorColor);
+}
+
+
+
 
 h1 {
   font-size: 3.2em;
@@ -73,7 +82,7 @@ h3 {
 
 p {
   color: var(--textSecondaryColor);
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 button {
@@ -89,6 +98,7 @@ button {
 }
 button:hover {
   border-color: var(--secondaryColor);
+  background-color: var(--secondaryColor);
 }
 button:focus,
 button:focus-visible {
@@ -107,3 +117,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+

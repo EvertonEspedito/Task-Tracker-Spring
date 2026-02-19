@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { deletarTask, listarTasks, atualizarTask } from "../api/tasks";
+import "../index.css";
 
 interface Task {
   id: number;
@@ -15,6 +16,12 @@ export function TaskList({ reload }: { reload: boolean }) {
   const [editId, setEditId] = useState<number | null>(null);
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
+
+  const [tocouTitulo, setTocouTitulo] = useState(false);
+  const [tocouDescricao, setTocouDescricao] = useState(false);
+
+  const tituloValido = titulo.trim().length >= 3;
+  const descricaoValida = descricao.trim().length >= 15;
 
   async function carregar() {
     setLoading(true);
@@ -36,9 +43,30 @@ export function TaskList({ reload }: { reload: boolean }) {
     setEditId(task.id);
     setTitulo(task.titulo);
     setDescricao(task.descricao);
+    setTocouTitulo(false);
+    setTocouDescricao(false);
   }
 
   async function salvarEdicao() {
+    setTocouTitulo(true);
+    setTocouDescricao(true);
+
+    // 🔴 validação com alert
+    if (!titulo.trim() && !descricao.trim()) {
+      window.alert("Título e descrição não podem estar vazios.");
+      return;
+    }
+
+    if (titulo.trim().length < 3) {
+      window.alert("O título deve ter no mínimo 3 caracteres.");
+      return;
+    }
+
+    if (descricao.trim().length < 15) {
+      window.alert("A descrição deve ter no mínimo 15 caracteres.");
+      return;
+    }
+
     if (editId === null) return;
 
     await atualizarTask(editId, {
@@ -47,13 +75,15 @@ export function TaskList({ reload }: { reload: boolean }) {
     });
 
     setEditId(null);
+    setTocouTitulo(false);
+    setTocouDescricao(false);
     carregar();
   }
 
   if (loading) return <p>Carregando...</p>;
 
   return (
-    <div className="addTaskInputDiv" style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+    <div className="addTaskInputDiv">
       {tasks.map((task) => (
         <div
           key={task.id}
@@ -70,22 +100,47 @@ export function TaskList({ reload }: { reload: boolean }) {
           }}
         >
           {editId === task.id ? (
-            < div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "8px",
+                padding: "16px",
+                borderRadius: "8px",
+                backgroundColor: "#f9f9f9",
+              }}
+            >
               <input
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
                 value={titulo}
-                onChange={(e) => setTitulo(e.target.value)}
+                onChange={(e) => {
+                  setTitulo(e.target.value);
+                  setTocouTitulo(true);
+                }}
                 placeholder="Título"
+                className={tocouTitulo && !tituloValido ? "inputError" : ""}
               />
+
               <input
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
                 value={descricao}
-                onChange={(e) => setDescricao(e.target.value)}
+                onChange={(e) => {
+                  setDescricao(e.target.value);
+                  setTocouDescricao(true);
+                }}
                 placeholder="Descrição"
+                className={tocouDescricao && !descricaoValida ? "inputError" : ""}
               />
-              <div style={{ display: "flex", gap: "8px" }}>
+
+              <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
                 <button onClick={salvarEdicao}>Salvar</button>
-                <button onClick={() => setEditId(null)}>Cancelar</button>
+                <button
+                  onClick={() => {
+                    setEditId(null);
+                    setTocouTitulo(false);
+                    setTocouDescricao(false);
+                  }}
+                >
+                  Cancelar
+                </button>
               </div>
             </div>
           ) : (
@@ -98,17 +153,24 @@ export function TaskList({ reload }: { reload: boolean }) {
               >
                 {task.concluida ? "Concluída" : "Pendente"}
               </span>
-              <h3 style={{ margin: "0" }}>{task.titulo}</h3>
-              <p style={{ margin: "0" }}>{task.descricao}</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "8px" }}>
+
+              <h3>{task.titulo}</h3>
+              <p>{task.descricao}</p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                 <button onClick={() => handleDelete(task.id)}>Excluir</button>
                 <button onClick={() => iniciarEdicao(task)}>Editar</button>
                 <button
                   onClick={() =>
-                    atualizarTask(task.id, { ...task, concluida: !task.concluida }).then(carregar)
+                    atualizarTask(task.id, {
+                      ...task,
+                      concluida: !task.concluida,
+                    }).then(carregar)
                   }
                 >
-                  {task.concluida ? "Marcar como Pendente" : "Marcar como Concluída"}
+                  {task.concluida
+                    ? "Marcar como Pendente"
+                    : "Marcar como Concluída"}
                 </button>
               </div>
             </>

@@ -2,21 +2,30 @@ import { useState } from "react";
 import { TaskForm } from "../components/TaskForm";
 import { TaskList } from "../components/TaskList";
 
-//css
+// Cabeçalho e rodapé
+import Header from "./appCab/Header";
+import Footer from "./appCab/Footer";
+
+// CSS
 import "../index.css";
 
 export function Home() {
   const [reload, setReload] = useState(false);
 
   function atualizar() {
-    setReload(!reload);
+    setReload((prev) => !prev);
   }
 
   return (
     <>
-      <h1>Task Tracker</h1>
-      <TaskForm onCreated={atualizar} />
-      <TaskList reload={reload} />
+      <Header />
+
+      <div className="appContainer">
+        <TaskForm onCreated={atualizar} />
+        <TaskList reload={reload} />
+      </div>
+
+      <Footer />
     </>
   );
 }
