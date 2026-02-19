@@ -2,16 +2,22 @@ package com.example.TaskTracker.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
+@Table(name = "tarefa")
 public class Tarefa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String titulo;
+
+    @Column(nullable = false)
     private String descricao;
-    private boolean concluida;
+
+    private boolean concluida = false;
 
     public Long getId() {
         return id;
