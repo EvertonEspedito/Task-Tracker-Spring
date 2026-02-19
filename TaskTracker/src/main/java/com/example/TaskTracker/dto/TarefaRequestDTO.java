@@ -1,14 +1,15 @@
 package com.example.TaskTracker.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class TarefaRequestDTO {
     @NotBlank(message = "Titulo não pode ser vazia")
+    @Size(min = 3)
     private String titulo;
-
     @NotBlank(message = "Descrição não pode ser vazia")
+    @Size(min = 15)
     private String descricao;
-
     private boolean concluida;
 
     public String getTitulo() {
