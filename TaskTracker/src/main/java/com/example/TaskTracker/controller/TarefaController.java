@@ -1,9 +1,12 @@
 package com.example.TaskTracker.controller;
 
 
-import com.example.TaskTracker.model.Tarefa;
-import com.example.TaskTracker.repository.TarefaRepository;
+import jakarta.validation.Valid;
+import com.example.TaskTracker.dto.TarefaRequestDTO;
+import com.example.TaskTracker.dto.TarefaResponseDTO;
+import com.example.TaskTracker.service.TarefaService;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -11,37 +14,24 @@ import java.util.List;
 @RequestMapping("/tarefas")
 public class TarefaController {
 
-    private final TarefaRepository repository;
+    private final TarefaService service;
 
-    public TarefaController(TarefaRepository repository) {
-        this.repository = repository;
+    public TarefaController(TarefaService service) {
+        this.service = service;
     }
 
-    // Criar tarefa
     @PostMapping
-    public Tarefa criar(@RequestBody Tarefa tarefa) {
-        return repository.save(tarefa);
+    public TarefaResponseDTO criar(@RequestBody @Valid TarefaRequestDTO dto) {
+        return service.criar(dto);
     }
 
-    // Listar tarefas
     @GetMapping
-    public List<Tarefa> listar() {
-        return repository.findAll();
+    public List<TarefaResponseDTO> listar() {
+        return service.listar();
     }
 
-    // Atualizar status
-    @PutMapping("/{id}")
-    public Tarefa atualizar(@PathVariable Long id, @RequestBody Tarefa novaTarefa) {
-        return repository.findById(id).map(tarefa -> {
-            tarefa.setDescricao(novaTarefa.getDescricao());
-            tarefa.setConcluida(novaTarefa.isConcluida());
-            return repository.save(tarefa);
-        }).orElseThrow();
-    }
-
-    // Deletar tarefa
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
-        repository.deleteById(id);
+        service.deletar(id);
     }
 }

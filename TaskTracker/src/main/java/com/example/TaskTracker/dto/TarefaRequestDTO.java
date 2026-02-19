@@ -1,21 +1,15 @@
-package com.example.TaskTracker.model;
+package com.example.TaskTracker.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-public class Tarefa {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class TarefaRequestDTO {
+    @NotBlank(message = "Titulo não pode ser vazia")
     private String titulo;
-    private String descricao;
-    private boolean concluida;
 
-    public Long getId() {
-        return id;
-    }
+    @NotBlank(message = "Descrição não pode ser vazia")
+    private String descricao;
+
+    private boolean concluida;
 
     public String getTitulo() {
         return titulo;
@@ -27,14 +21,6 @@ public class Tarefa {
 
     public boolean isConcluida() {
         return concluida;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
     }
 
     public void setDescricao(String descricao) {
