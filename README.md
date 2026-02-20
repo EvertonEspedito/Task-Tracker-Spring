@@ -1,24 +1,43 @@
 
-# ☕ Task Tracker - Backend
+# 📝 Task Tracker
 
-Backend da aplicação Task Tracker desenvolvido com Spring Boot.
+O **Task Tracker** é uma aplicação full stack para gerenciamento de tarefas, permitindo criar, editar, excluir e acompanhar o status das tarefas (concluídas ou pendentes), além de visualizar um **dashboard com gráficos**.
 
-## 🛠️ Tecnologias
+## 🚀 Tecnologias Utilizadas
+
+### Backend
 - Java 17
 - Spring Boot
 - Spring Data JPA
 - Hibernate
 - PostgreSQL
-- Swagger
+- Swagger (OpenAPI)
 
-## 📌 Endpoints
-GET /api/tasks  
-POST /api/tasks  
-PUT /api/tasks/{id}  
-DELETE /api/tasks/{id}
+### Frontend
+- React
+- Vite
+- TypeScript
+- React Router DOM
+- Recharts
+- CSS puro
 
-## ▶️ Executar
+## ⚙️ Funcionalidades
+- CRUD de tarefas
+- Marcar tarefas como concluídas ou pendentes
+- Dashboard com gráficos
+- Integração Frontend + Backend
+
+## ▶️ Como Executar
+
+### Backend
 ./mvnw spring-boot:run
 
-Swagger:
-http://localhost:8080/swagger-ui.html
+### Frontend
+npm install
+npm run dev
+
+Frontend: http://localhost:5173  
+Backend: http://localhost:8080  
+
+## 👨‍💻 Autor
+Everton Santos
