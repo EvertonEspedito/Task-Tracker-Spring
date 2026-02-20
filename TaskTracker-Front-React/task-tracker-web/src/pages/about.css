@@ -1,0 +1,47 @@
+.sobre-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem;
+}
+
+.sobre-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #4f46e5;
+}
+
+.descricao {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #4b5563;
+  margin-bottom: 2.5rem;
+}
+
+.bloco {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.bloco h2 {
+  margin-bottom: 0iivem;
+  color: #111827;
+}
+
+.bloco p,
+.bloco li {
+  color: #374151;
+  line-height: 1.6;
+}
+
+.bloco ul {
+  padding-left: 1.2rem;
+}
+
+.autor {
+  text-align: center;
+  margin-top: 3rem;
+  color: #6b7280;
+}

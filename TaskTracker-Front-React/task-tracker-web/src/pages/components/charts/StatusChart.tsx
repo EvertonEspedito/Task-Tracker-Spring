@@ -1,9 +1,11 @@
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, Legend, Tooltip } from "recharts";
 
 interface Props {
   concluidas: number;
   pendentes: number;
 }
+
+const COLORS = ["#22c55e", "#ef4444"];
 
 export function StatusChart({ concluidas, pendentes }: Props) {
   const data = [
@@ -11,24 +13,28 @@ export function StatusChart({ concluidas, pendentes }: Props) {
     { name: "Pendentes", value: pendentes },
   ];
 
-  const COLORS = ["#22c55e", "#ef4444"];
-
   return (
-    <PieChart width={300} height={300}>
-      <Pie
-        data={data}
-        cx="50%"
-        cy="50%"
-        outerRadius={100}
-        dataKey="value"
-        label
-      >
-        {data.map((_, index) => (
-          <Cell key={index} fill={COLORS[index]} />
-        ))}
-      </Pie>
-      <Tooltip />
-      <Legend />
-    </PieChart>
+    <>
+      <h3>Status das Tarefas</h3>
+
+      <PieChart width={400} height={300}>
+        <Pie
+          data={data}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          outerRadius={100}
+          label
+        >
+          {data.map((_, index) => (
+            <Cell key={index} fill={COLORS[index]} />
+          ))}
+        </Pie>
+
+        <Tooltip />
+        <Legend />
+      </PieChart>
+    </>
   );
 }

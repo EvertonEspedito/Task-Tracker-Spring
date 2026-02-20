@@ -7,9 +7,9 @@ function Header() {
       <p>Organize suas tarefas com eficiência</p>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
+          <li><a href="/">Início</a></li>
           <li><a href="./graficos">Gráficos</a></li>
-          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="./sobre">Sobre</a></li>
         </ul>
       </nav>
     </header>
