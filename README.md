@@ -39,5 +39,7 @@ npm run dev
 Frontend: http://localhost:5173  
 Backend: http://localhost:8080  
 
+URL do Projeto Baseado: https://roadmap.sh/projects/task-tracker
+
 ## 👨‍💻 Autor
 Everton Santos
